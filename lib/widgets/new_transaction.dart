@@ -37,49 +37,51 @@ class _NewTransactionState extends State<NewTransaction> {
     if (enteredTitle.isEmpty || enteredAmount <= 0) {
       return;
     }
-    widget.addNewTransaction(enteredTitle, enteredAmount, selectedDate);
+    widget.addNewTransaction(DateTime.now().toString(),enteredTitle, enteredAmount, selectedDate);
     Navigator.of(context).pop();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            TextField(
-              decoration: InputDecoration(labelText: 'Title'),
-              controller: titleController,
-              onSubmitted: (_) => submitData(),
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              controller: amountController,
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => submitData(),
-            ),
-            Container(
-              height: 70,
-              child: Row(
-                children: [
-                  Text(selectedDate == null ? 'No date choosen' : DateFormat.yMd(selectedDate).toString()),
-                  TextButton(
-                    onPressed: presentDatePicker,
-                    child: Text(
-                      'choose Date',
-                    ),
-                  )
-                ],
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 10,
+        child: Container(
+          padding: EdgeInsets.only(top:10,left: 10,right: 10,bottom: MediaQuery.of(context).viewInsets.bottom+10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              TextField(
+                decoration: InputDecoration(labelText: 'Title'),
+                controller: titleController,
+                onSubmitted: (_) => submitData(),
               ),
-            ),
-            TextButton(
-              onPressed: submitData,
-              child: Text('Add transaction'),
-            )
-          ],
+              TextField(
+                decoration: InputDecoration(labelText: 'Amount'),
+                controller: amountController,
+                keyboardType: TextInputType.number,
+                onSubmitted: (_) => submitData(),
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: [
+                    Text(selectedDate == null ? 'No date choosen' : DateFormat.yMd(selectedDate).toString()),
+                    TextButton(
+                      onPressed: presentDatePicker,
+                      child: Text(
+                        'choose Date',
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              TextButton(
+                onPressed: submitData,
+                child: Text('Add transaction'),
+              )
+            ],
+          ),
         ),
       ),
     );
